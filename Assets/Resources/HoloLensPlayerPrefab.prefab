@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &4786322814578916367
+--- !u!114 &5403582530863574034
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1898198076510740052}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Script: {fileID: 11500000, guid: 00423f46ef5d81d4e83792849342677c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relativeTransformGameObjectName: Root
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
---- !u!114 &6758873154966718737
+--- !u!114 &7797673101445856283
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -33,7 +33,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 4786322814578916367}
+  - {fileID: 5403582530863574034}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

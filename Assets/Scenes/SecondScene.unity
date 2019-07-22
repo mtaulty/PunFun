@@ -298,8 +298,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profile:
-    azureAccountId: d50581e8-2e4d-4b7e-8b0b-9219c0658636
-    azureServiceKey: 2UfMlSKvFUhzhY7hNhCDiZd3EMLiP0P88uvs/p1zAZg=
+    azureAccountId: NO ACCOUNT ID
+    azureServiceKey: NO SERVICE KEY
 --- !u!114 &1001560125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,6 +320,8 @@ MonoBehaviour:
   locatedAnchorMaterial: {fileID: 2100000, guid: 47f3c5e1cb6142ba9697cd4c86d74321,
     type: 2}
   failedMaterial: {fileID: 2100000, guid: c4a1b7475a654dd0acaa0cfdfba2e20c, type: 2}
+  haloPrefab: {fileID: 1898198076510740052, guid: b670ffcccc32e8b48b513ba9519bcf8d,
+    type: 3}
   emptyRoomTimeToLiveSeconds: 120
 --- !u!362 &1001560126
 WorldAnchor:

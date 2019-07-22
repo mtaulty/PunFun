@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class CubeScript : MonoBehaviour, IPunInstantiateMagicCallback, IMixedRealityFocusHandler, IPunOwnershipCallbacks
 {
+    string ViewIDAsString => this.GetComponent<PhotonView>().ViewID.ToString();
+
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         var parent = GameObject.Find("Root");
@@ -18,7 +20,10 @@ public class CubeScript : MonoBehaviour, IPunInstantiateMagicCallback, IMixedRea
         {
             var transformStringValue = PhotonNetwork.CurrentRoom.CustomProperties[this.ViewIDAsString] as string;
 
-            StringToLocalTransform(this.transform, transformStringValue);
+            if (!string.IsNullOrEmpty(transformStringValue))
+            {
+                StringToLocalTransform(this.transform, transformStringValue);
+            }
         }
     }
     public void OnFocusEnter(FocusEventData eventData)
@@ -37,8 +42,6 @@ public class CubeScript : MonoBehaviour, IPunInstantiateMagicCallback, IMixedRea
     public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner)
     {
     }
-    string ViewIDAsString => this.GetComponent<PhotonView>().ViewID.ToString();
-
     public void OnManipulationEnded()
     {
         var photonView = this.GetComponent<PhotonView>();
@@ -47,13 +50,22 @@ public class CubeScript : MonoBehaviour, IPunInstantiateMagicCallback, IMixedRea
         {
             var transformStringValue = LocalTransformToString(this.transform);
 
-            PhotonNetwork.CurrentRoom.SetCustomProperties(
-                new Hashtable()
-                {
-                    {  this.ViewIDAsString, transformStringValue }
-                }
-            );
+            this.SetViewIdCustomRoomProperty(transformStringValue);
         }
+    }
+    void SetViewIdCustomRoomProperty(string value)
+    {
+        PhotonNetwork.CurrentRoom.SetCustomProperties(
+            new Hashtable()
+            {
+                    {  this.ViewIDAsString, value }
+            }
+        );
+    }
+    public void OnRemove()
+    {
+        this.SetViewIdCustomRoomProperty(null);
+        PhotonNetwork.Destroy(this.gameObject);
     }
     static string LocalTransformToString(Transform transform)
     {
