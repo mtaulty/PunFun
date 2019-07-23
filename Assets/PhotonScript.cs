@@ -51,9 +51,6 @@ public class PhotonScript : MonoBehaviourPunCallbacks
         var roomOptions = new RoomOptions();
         roomOptions.EmptyRoomTtl = this.emptyRoomTimeToLiveSeconds * 1000;
         PhotonNetwork.JoinOrCreateRoom(ROOM_NAME, roomOptions, null);
-
-        var halo = PhotonNetwork.Instantiate(this.haloPrefab.name, Vector3.zero, Quaternion.identity);
-        halo.transform.SetParent(CameraCache.Main.transform);
     }
     public async override void OnJoinedRoom()
     {
@@ -65,6 +62,9 @@ public class PhotonScript : MonoBehaviourPunCallbacks
             this.roomStatus = RoomStatus.JoinedRoom;
         }
         await this.PopulateAnchorAsync();
+
+        var halo = PhotonNetwork.Instantiate(this.haloPrefab.name, Vector3.zero, Quaternion.identity);
+        halo.transform.SetParent(CameraCache.Main.transform);
     }
     public async override void OnCreatedRoom()
     {

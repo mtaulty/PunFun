@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   relativeTransformGameObjectName: Root
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
 --- !u!114 &7797673101445856283
 MonoBehaviour:
   m_ObjectHideFlags: 0

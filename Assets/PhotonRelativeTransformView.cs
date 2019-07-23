@@ -1,23 +1,39 @@
 ﻿namespace Photon.Pun
 {
     using UnityEngine;
-    [AddComponentMenu("Photon Networking/Photon Transform View")]
-    [HelpURL("https://doc.photonengine.com/en-us/pun/v2/gameplay/synchronization-and-state")]
+
     [RequireComponent(typeof(PhotonView))]
     public class PhotonRelativeTransformView : MonoBehaviour, IPunObservable
     {
         [SerializeField]
-        private string relativeTransformGameObjectName;
+        string relativeTransformGameObjectName;
 
-        private PhotonView m_PhotonView;
+        GameObject relativeGameObject;
 
-        public bool m_SynchronizePosition = true;
-        public bool m_SynchronizeRotation = true;
 
-        Vector3 RelativePosition => this.gameObject.transform.position - this.RelativeGameObject.transform.position;
-
-        Quaternion RelativeRotation =>
-            Quaternion.Inverse(this.RelativeGameObject.transform.rotation) * this.transform.rotation;
+        Vector3 RelativePosition
+        {
+            get
+            {
+                return (this.gameObject.transform.position - this.RelativeGameObject.transform.position);
+            }
+            set
+            {
+                this.gameObject.transform.position = this.RelativeGameObject.transform.position + value;
+            }
+        }
+        Quaternion RelativeRotation
+        {
+            get
+            {
+                return (Quaternion.Inverse(this.RelativeGameObject.transform.rotation) * this.transform.rotation);
+            }
+            set
+            {
+                this.gameObject.transform.rotation = this.RelativeGameObject.transform.rotation;
+                this.gameObject.transform.rotation *= value;
+            }
+        }
 
         GameObject RelativeGameObject
         {
@@ -30,35 +46,18 @@
                 return (this.relativeGameObject);
             }
         }
-        GameObject relativeGameObject;
-        public void Awake()
-        {
-            m_PhotonView = GetComponent<PhotonView>();
-        }
+
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)
             {
-                if (this.m_SynchronizePosition)
-                {
-                    stream.SendNext(this.RelativePosition);
-                }
-
-                if (this.m_SynchronizeRotation)
-                {
-                    stream.SendNext(this.RelativeRotation);
-                }
+                stream.SendNext(this.RelativePosition);
+                stream.SendNext(this.RelativeRotation);
             }
             else
             {
-                if (this.m_SynchronizePosition)
-                {
-                    this.gameObject.transform.position = this.RelativeGameObject.transform.position + (Vector3)stream.ReceiveNext();
-                }
-                if (this.m_SynchronizeRotation)
-                {
-                    this.gameObject.transform.rotation = (Quaternion)stream.ReceiveNext();
-                }
+                this.RelativePosition = (Vector3)stream.ReceiveNext();
+                this.RelativeRotation = (Quaternion)stream.ReceiveNext();
             }
         }
     }

@@ -299,7 +299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   profile:
     azureAccountId: NO ACCOUNT ID
-    azureServiceKey: NO SERVICE KEY
+    azureServiceKey: NO SERVIER KEY
 --- !u!114 &1001560125
 MonoBehaviour:
   m_ObjectHideFlags: 0
